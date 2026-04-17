@@ -1,177 +1,82 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dominio de Joins - Yefry Quispe</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-        .active-tab { background-color: #2563eb !important; color: white !important; box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3); }
-    </style>
+  <meta charset="UTF-8">
+  <title>Dominio de Joins</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-slate-50 font-sans p-4 md:p-8">
+<body class="bg-slate-50 font-sans">
 
-    <header class="max-w-5xl mx-auto bg-slate-900 text-white rounded-3xl p-8 mb-8 shadow-2xl relative overflow-hidden">
-        <div class="relative z-10">
-            <div class="flex items-center gap-3 mb-4">
-                <span class="bg-blue-600 text-[10px] font-bold px-3 py-1 rounded-full tracking-widest uppercase">Proyecto Académico 2026</span>
-            </div>
-            <h1 class="text-4xl md:text-5xl font-extrabold mb-2 tracking-tight">Dominio de Joins en SQL Server</h1>
-            <p class="text-blue-200 text-lg max-w-2xl font-light">
-                Análisis y extracción de datos relacionales aplicados a las bases de datos <span class="font-semibold text-white italic">Northwind</span> y <span class="font-semibold text-white italic">Pubs</span>.
-            </p>
-            <div class="mt-6 flex flex-wrap gap-4 text-sm text-slate-400">
-                <div class="flex items-center gap-2 bg-slate-800/50 px-4 py-2 rounded-xl">
-                    <i data-lucide="users" class="w-4 h-4"></i> <span>Grupo: Las Fuerzas</span>
-                </div>
-                <div class="flex items-center gap-2 bg-slate-800/50 px-4 py-2 rounded-xl">
-                    <i data-lucide="layout" class="w-4 h-4"></i> <span>U. Andina del Cusco</span>
-                </div>
-            </div>
-        </div>
-        <div class="absolute -right-20 -top-20 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl"></div>
-    </header>
+<div class="min-h-screen p-4 md:p-8">
 
-    <main class="max-w-5xl mx-auto">
-        <div class="flex bg-white p-2 rounded-2xl shadow-sm mb-8 gap-2 overflow-x-auto">
-            <button onclick="showTab('teoria')" id="btn-teoria" class="tab-btn active-tab flex-1 py-3 px-6 rounded-xl font-bold transition-all text-sm uppercase tracking-wide">Teoría</button>
-            <button onclick="showTab('desarrollo')" id="btn-desarrollo" class="tab-btn flex-1 py-3 px-6 rounded-xl font-bold transition-all text-sm uppercase tracking-wide text-slate-500 hover:bg-slate-50">Desarrollo</button>
-            <button onclick="showTab('conclusiones')" id="btn-conclusiones" class="tab-btn flex-1 py-3 px-6 rounded-xl font-bold transition-all text-sm uppercase tracking-wide text-slate-500 hover:bg-slate-50">Conclusiones</button>
-        </div>
+  <!-- HEADER -->
+  <header class="max-w-5xl mx-auto bg-slate-900 text-white rounded-3xl p-8 mb-8 shadow-2xl">
+    <span class="bg-blue-600 text-[10px] px-3 py-1 rounded-full uppercase">Proyecto Académico 2026</span>
+    <h1 class="text-4xl font-extrabold mt-4">Dominio de Joins en SQL Server</h1>
+    <p class="text-blue-200 mt-2">Bases de datos Northwind y Pubs</p>
+  </header>
 
-        <div id="teoria" class="tab-content active">
-            <div class="grid md:grid-cols-3 gap-6">
-                <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 hover:shadow-xl transition-shadow group">
-                    <div class="bg-blue-500 w-16 h-16 rounded-2xl flex items-center justify-center text-white text-2xl font-mono mb-6 shadow-inner group-hover:scale-110 transition-transform">○∩○</div>
-                    <h3 class="text-xl font-black text-slate-800 mb-3">INNER JOIN</h3>
-                    <p class="text-slate-600 text-sm mb-4 leading-relaxed">Devuelve solo registros con coincidencias en ambas tablas.</p>
-                    <div class="pt-4 border-t border-slate-50">
-                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Uso Principal</span>
-                        <p class="text-slate-700 text-sm font-medium">Garantiza integridad de datos relacionados.</p>
-                    </div>
-                </div>
-                <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 hover:shadow-xl transition-shadow group">
-                    <div class="bg-emerald-500 w-16 h-16 rounded-2xl flex items-center justify-center text-white text-2xl font-mono mb-6 shadow-inner group-hover:scale-110 transition-transform">●∩○</div>
-                    <h3 class="text-xl font-black text-slate-800 mb-3">LEFT JOIN</h3>
-                    <p class="text-slate-600 text-sm mb-4 leading-relaxed">Devuelve todo de la tabla izquierda y coincidencias de la derecha.</p>
-                    <div class="pt-4 border-t border-slate-50">
-                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Uso Principal</span>
-                        <p class="text-slate-700 text-sm font-medium">Identificar datos faltantes o clientes inactivos.</p>
-                    </div>
-                </div>
-                <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 hover:shadow-xl transition-shadow group">
-                    <div class="bg-amber-500 w-16 h-16 rounded-2xl flex items-center justify-center text-white text-2xl font-mono mb-6 shadow-inner group-hover:scale-110 transition-transform">○∩●</div>
-                    <h3 class="text-xl font-black text-slate-800 mb-3">RIGHT JOIN</h3>
-                    <p class="text-slate-600 text-sm mb-4 leading-relaxed">Devuelve todo de la tabla derecha y coincidencias de la izquierda.</p>
-                    <div class="pt-4 border-t border-slate-50">
-                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Uso Principal</span>
-                        <p class="text-slate-700 text-sm font-medium">Validar integridad desde la perspectiva opuesta.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="md:col-span-3 mt-8 bg-blue-50 rounded-3xl p-8 flex flex-col md:flex-row items-center gap-8">
-                <div class="bg-white p-4 rounded-2xl shadow-sm text-blue-600">
-                    <i data-lucide="database" class="w-12 h-12"></i>
-                </div>
-                <div>
-                    <h4 class="text-lg font-bold text-blue-900 mb-2">Fundamento Relacional</h4>
-                    <p class="text-blue-700 text-sm">Los JOIN permiten combinar registros de dos o más tablas mediante campos relacionados, generalmente claves primarias (PK) y foráneas (FK), permitiendo que la información dispersa se convierta en conocimiento útil.</p>
-                </div>
-            </div>
-        </div>
+  <!-- BOTONES -->
+  <div class="max-w-5xl mx-auto flex gap-2 bg-white p-2 rounded-2xl shadow mb-6">
+    <button onclick="showTab('teoria')" class="tab-btn bg-blue-600 text-white px-4 py-2 rounded-xl">Teoría</button>
+    <button onclick="showTab('desarrollo')" class="tab-btn px-4 py-2">Desarrollo</button>
+    <button onclick="showTab('conclusiones')" class="tab-btn px-4 py-2">Conclusiones</button>
+  </div>
 
-        <div id="desarrollo" class="tab-content space-y-6">
-            <div class="grid md:grid-cols-2 gap-8">
-                <div class="bg-white rounded-3xl p-8 shadow-sm border border-slate-100">
-                    <div class="flex justify-between items-start mb-6">
-                        <div>
-                            <h3 class="text-2xl font-black text-slate-800">Northwind</h3>
-                            <p class="text-blue-600 font-semibold text-sm">Ventas y Logística</p>
-                        </div>
-                        <div class="bg-slate-100 p-3 rounded-2xl text-slate-400">
-                            <i data-lucide="table"></i>
-                        </div>
-                    </div>
-                    <div class="space-y-4 mb-8 text-sm font-bold text-slate-700">
-                        <div class="flex items-center justify-between p-3 bg-slate-50 rounded-xl"><span>INNER JOIN</span> <span class="text-blue-600">8 consultas</span></div>
-                        <div class="flex items-center justify-between p-3 bg-slate-50 rounded-xl"><span>LEFT JOIN</span> <span class="text-emerald-600">1 consulta</span></div>
-                        <div class="flex items-center justify-between p-3 bg-slate-50 rounded-xl"><span>RIGHT JOIN</span> <span class="text-amber-600">1 consulta</span></div>
-                    </div>
-                    <div class="bg-blue-600 text-white p-4 rounded-2xl flex items-center justify-between">
-                        <div><p class="text-[10px] uppercase font-bold text-blue-200">Total Ejecutadas</p><p class="text-2xl font-black">10 Queries</p></div>
-                        <i data-lucide="check-circle" class="opacity-50"></i>
-                    </div>
-                </div>
-                <div class="bg-white rounded-3xl p-8 shadow-sm border border-slate-100">
-                    <div class="flex justify-between items-start mb-6">
-                        <div>
-                            <h3 class="text-2xl font-black text-slate-800">Pubs</h3>
-                            <p class="text-blue-600 font-semibold text-sm">Editorial y Autores</p>
-                        </div>
-                        <div class="bg-slate-100 p-3 rounded-2xl text-slate-400">
-                            <i data-lucide="table"></i>
-                        </div>
-                    </div>
-                    <div class="space-y-4 mb-8 text-sm font-bold text-slate-700">
-                        <div class="flex items-center justify-between p-3 bg-slate-50 rounded-xl"><span>INNER JOIN</span> <span class="text-blue-600">8 consultas</span></div>
-                        <div class="flex items-center justify-between p-3 bg-slate-50 rounded-xl"><span>LEFT JOIN</span> <span class="text-emerald-600">1 consulta</span></div>
-                        <div class="flex items-center justify-between p-3 bg-slate-50 rounded-xl"><span>RIGHT JOIN</span> <span class="text-amber-600">1 consulta</span></div>
-                    </div>
-                    <div class="bg-blue-600 text-white p-4 rounded-2xl flex items-center justify-between">
-                        <div><p class="text-[10px] uppercase font-bold text-blue-200">Total Ejecutadas</p><p class="text-2xl font-black">10 Queries</p></div>
-                        <i data-lucide="check-circle" class="opacity-50"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <!-- TEORIA -->
+  <div id="teoria" class="tab max-w-5xl mx-auto grid md:grid-cols-3 gap-6">
+    
+    <div class="bg-white p-6 rounded-3xl shadow">
+      <div class="bg-blue-500 text-white p-4 rounded-xl text-center">INNER</div>
+      <h3 class="font-bold mt-4">INNER JOIN</h3>
+      <p class="text-sm text-slate-600">Coincidencias en ambas tablas</p>
+    </div>
 
-        <div id="conclusiones" class="tab-content">
-            <div class="grid md:grid-cols-2 gap-6 mb-8">
-                <div class="bg-white rounded-3xl p-8 shadow-sm border-l-8 border-l-blue-600">
-                    <h3 class="text-xl font-black text-slate-800 mb-4">Conclusiones Clave</h3>
-                    <ul class="space-y-4 text-slate-600 text-sm">
-                        <li class="flex gap-4"><span class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold shrink-0">01</span><p>Integración eficiente de información multi-tabla.</p></li>
-                        <li class="flex gap-4"><span class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold shrink-0">02</span><p>Comprensión táctica de los tipos de JOIN.</p></li>
-                        <li class="flex gap-4"><span class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold shrink-0">03</span><p>Optimización de la toma de decisiones.</p></li>
-                    </ul>
-                </div>
-                <div class="bg-emerald-50 rounded-3xl p-8 shadow-sm border-l-8 border-l-emerald-600">
-                    <h3 class="text-xl font-black text-emerald-900 mb-4">Recomendaciones</h3>
-                    <div class="space-y-3">
-                        <div class="bg-white p-3 rounded-xl text-emerald-800 text-[10px] font-bold border border-emerald-100 flex items-center gap-3">Validar relaciones (PK/FK) previamente.</div>
-                        <div class="bg-white p-3 rounded-xl text-emerald-800 text-[10px] font-bold border border-emerald-100 flex items-center gap-3">Documentar rigurosamente el código SQL.</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
+    <div class="bg-white p-6 rounded-3xl shadow">
+      <div class="bg-emerald-500 text-white p-4 rounded-xl text-center">LEFT</div>
+      <h3 class="font-bold mt-4">LEFT JOIN</h3>
+      <p class="text-sm text-slate-600">Todo izquierda + coincidencias</p>
+    </div>
 
-    <footer class="max-w-5xl mx-auto mt-12 text-center text-slate-400 text-[10px] pb-12">
-        <p>© 2026 Universidad Andina del Cusco - Facultad de Ingeniería y Arquitectura</p>
-        <p class="mt-2 font-bold text-slate-600">Modelado de Base de Datos | Grupo: Las Fuerzas</p>
-        <p>Creado por: Yefry Ciaran Quispe Callañaupa</p>
-    </footer>
+    <div class="bg-white p-6 rounded-3xl shadow">
+      <div class="bg-amber-500 text-white p-4 rounded-xl text-center">RIGHT</div>
+      <h3 class="font-bold mt-4">RIGHT JOIN</h3>
+      <p class="text-sm text-slate-600">Todo derecha + coincidencias</p>
+    </div>
 
-    <script>
-        // Inicializar iconos
-        lucide.createIcons();
+  </div>
 
-        // Función para cambiar pestañas
-        function showTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(b => {
-                b.classList.remove('active-tab');
-                b.classList.add('text-slate-500');
-            });
+  <!-- DESARROLLO -->
+  <div id="desarrollo" class="tab hidden max-w-5xl mx-auto">
+    <div class="bg-white p-6 rounded-3xl shadow">
+      <h3 class="font-bold text-xl">Base de datos Northwind</h3>
+      <p class="text-sm mt-2">Consultas realizadas: 10</p>
+    </div>
+  </div>
 
-            document.getElementById(tabId).classList.add('active');
-            const activeBtn = document.getElementById('btn-' + tabId);
-            activeBtn.classList.add('active-tab');
-            activeBtn.classList.remove('text-slate-500');
-        }
-    </script>
+  <!-- CONCLUSIONES -->
+  <div id="conclusiones" class="tab hidden max-w-5xl mx-auto">
+    <div class="bg-white p-6 rounded-3xl shadow">
+      <h3 class="font-bold text-xl">Conclusiones</h3>
+      <ul class="list-disc ml-5 mt-3 text-sm">
+        <li>Integración de datos</li>
+        <li>Uso correcto de JOIN</li>
+        <li>Mejor toma de decisiones</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function showTab(tab) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.add('hidden'));
+  document.getElementById(tab).classList.remove('hidden');
+
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('bg-blue-600','text-white'));
+  event.target.classList.add('bg-blue-600','text-white');
+}
+</script>
+
 </body>
 </html>
