@@ -1,0 +1,248 @@
+import React, { useState } from 'react';
+import { Database, Table, ArrowRightLeft, CheckCircle, Info, ChevronRight, Layout, BookOpen, Users } from 'lucide-react';
+
+const App = () => {
+  const [activeTab, setActiveTab] = useState('teoria');
+
+  const joinTypes = [
+    {
+      id: 'inner',
+      title: 'INNER JOIN',
+      desc: 'Devuelve solo registros con coincidencias en ambas tablas.',
+      use: 'Garantiza integridad de datos relacionados.',
+      color: 'bg-blue-500',
+      icon: '○∩○'
+    },
+    {
+      id: 'left',
+      title: 'LEFT JOIN',
+      desc: 'Devuelve todo de la tabla izquierda y coincidencias de la derecha.',
+      use: 'Identificar datos faltantes o clientes inactivos.',
+      color: 'bg-emerald-500',
+      icon: '●∩○'
+    },
+    {
+      id: 'right',
+      title: 'RIGHT JOIN',
+      desc: 'Devuelve todo de la tabla derecha y coincidencias de la izquierda.',
+      use: 'Validar integridad desde la perspectiva opuesta.',
+      color: 'bg-amber-500',
+      icon: '○∩●'
+    }
+  ];
+
+  const dbStats = [
+    { name: 'Northwind', type: 'Ventas y Logística', inner: 8, left: 1, right: 1, total: 10 },
+    { name: 'Pubs', type: 'Editorial y Autores', inner: 8, left: 1, right: 1, total: 10 }
+  ];
+
+  return (
+    <div className="min-h-screen bg-slate-50 font-sans p-4 md:p-8">
+      {/* Header */}
+      <header className="max-w-5xl mx-auto bg-slate-900 text-white rounded-3xl p-8 mb-8 shadow-2xl relative overflow-hidden">
+        <div className="relative z-10">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="bg-blue-600 text-[10px] font-bold px-3 py-1 rounded-full tracking-widest uppercase">Proyecto Académico 2026</span>
+          </div>
+          <h1 className="text-4xl md:text-5xl font-extrabold mb-2 tracking-tight">Dominio de Joins en SQL Server</h1>
+          <p className="text-blue-200 text-lg max-w-2xl font-light">
+            Análisis y extracción de datos relacionales aplicados a las bases de datos <span className="font-semibold text-white italic">Northwind</span> y <span className="font-semibold text-white italic">Pubs</span>.
+          </p>
+          <div className="mt-6 flex flex-wrap gap-4 text-sm text-slate-400">
+            <div className="flex items-center gap-2 bg-slate-800/50 px-4 py-2 rounded-xl">
+              <Users size={16} /> <span>Grupo: Las Fuerzas</span>
+            </div>
+            <div className="flex items-center gap-2 bg-slate-800/50 px-4 py-2 rounded-xl">
+              <Layout size={16} /> <span>U. Andina del Cusco</span>
+            </div>
+          </div>
+        </div>
+        {/* Abstract Background Element */}
+        <div className="absolute -right-20 -top-20 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl"></div>
+      </header>
+
+      <main className="max-w-5xl mx-auto">
+        {/* Navigation Tabs */}
+        <div className="flex bg-white p-2 rounded-2xl shadow-sm mb-8 gap-2 overflow-x-auto">
+          {['teoria', 'desarrollo', 'conclusiones'].map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={`flex-1 py-3 px-6 rounded-xl font-bold transition-all text-sm uppercase tracking-wide ${
+                activeTab === tab ? 'bg-blue-600 text-white shadow-lg' : 'text-slate-500 hover:bg-slate-50'
+              }`}
+            >
+              {tab.charAt(0).toUpperCase() + tab.slice(1)}
+            </button>
+          ))}
+        </div>
+
+        {/* Content Section: Teoria */}
+        {activeTab === 'teoria' && (
+          <div className="grid md:grid-cols-3 gap-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+            {joinTypes.map((join) => (
+              <div key={join.id} className="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 hover:shadow-xl transition-shadow group">
+                <div className={`${join.color} w-16 h-16 rounded-2xl flex items-center justify-center text-white text-2xl font-mono mb-6 shadow-inner group-hover:scale-110 transition-transform`}>
+                  {join.icon}
+                </div>
+                <h3 className="text-xl font-black text-slate-800 mb-3">{join.title}</h3>
+                <p className="text-slate-600 text-sm mb-4 leading-relaxed">{join.desc}</p>
+                <div className="pt-4 border-t border-slate-50">
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Uso Principal</span>
+                  <p className="text-slate-700 text-sm font-medium">{join.use}</p>
+                </div>
+              </div>
+            ))}
+            <div className="md:col-span-3 bg-blue-50 rounded-3xl p-8 flex flex-col md:flex-row items-center gap-8">
+              <div className="bg-white p-4 rounded-2xl shadow-sm">
+                <Database size={48} className="text-blue-600" />
+              </div>
+              <div>
+                <h4 className="text-lg font-bold text-blue-900 mb-2">Fundamento Relacional</h4>
+                <p className="text-blue-700 text-sm">
+                  Los JOIN permiten combinar registros de dos o más tablas mediante campos relacionados, generalmente claves primarias (PK) y foráneas (FK), permitiendo que la información dispersa se convierta en conocimiento útil.
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Content Section: Desarrollo */}
+        {activeTab === 'desarrollo' && (
+          <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <div className="grid md:grid-cols-2 gap-8">
+              {dbStats.map((db, idx) => (
+                <div key={idx} className="bg-white rounded-3xl p-8 shadow-sm border border-slate-100">
+                  <div className="flex justify-between items-start mb-6">
+                    <div>
+                      <h3 className="text-2xl font-black text-slate-800">{db.name}</h3>
+                      <p className="text-blue-600 font-semibold text-sm">{db.type}</p>
+                    </div>
+                    <div className="bg-slate-100 p-3 rounded-2xl">
+                      <Table className="text-slate-400" />
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-4 mb-8">
+                    <div className="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100">
+                      <div className="flex items-center gap-3">
+                        <div className="w-2 h-2 rounded-full bg-blue-500"></div>
+                        <span className="text-sm font-bold text-slate-700">INNER JOIN</span>
+                      </div>
+                      <span className="bg-white px-3 py-1 rounded-lg text-xs font-black text-blue-600 shadow-sm">{db.inner} consultas</span>
+                    </div>
+                    <div className="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100">
+                      <div className="flex items-center gap-3">
+                        <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
+                        <span className="text-sm font-bold text-slate-700">LEFT JOIN</span>
+                      </div>
+                      <span className="bg-white px-3 py-1 rounded-lg text-xs font-black text-emerald-600 shadow-sm">{db.left} consulta</span>
+                    </div>
+                    <div className="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100">
+                      <div className="flex items-center gap-3">
+                        <div className="w-2 h-2 rounded-full bg-amber-500"></div>
+                        <span className="text-sm font-bold text-slate-700">RIGHT JOIN</span>
+                      </div>
+                      <span className="bg-white px-3 py-1 rounded-lg text-xs font-black text-amber-600 shadow-sm">{db.right} consulta</span>
+                    </div>
+                  </div>
+
+                  <div className="bg-blue-600 text-white p-4 rounded-2xl flex items-center justify-between group cursor-default">
+                    <div>
+                      <p className="text-[10px] uppercase font-bold text-blue-200">Total Ejecutadas</p>
+                      <p className="text-2xl font-black">{db.total} Queries</p>
+                    </div>
+                    <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
+                      <CheckCircle size={20} />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            
+            <div className="bg-slate-900 text-white rounded-3xl p-8">
+              <h4 className="flex items-center gap-2 text-xl font-bold mb-6 text-blue-400">
+                <Info size={24} /> Análisis de Resultados
+              </h4>
+              <div className="grid md:grid-cols-2 gap-8">
+                <div className="bg-slate-800/50 p-6 rounded-2xl border border-slate-700">
+                  <p className="text-slate-300 text-sm leading-relaxed italic">
+                    "Las consultas permitieron responder preguntas de negocio críticas como: ¿Qué clientes generan más pedidos? o ¿Qué productos están asociados a determinadas categorías?"
+                  </p>
+                </div>
+                <ul className="space-y-3">
+                  {['Verificación de relación entre tablas', 'Validación de integridad de datos', 'Detección de registros sin correspondencia', 'Consolidación de info dispersa'].map((item, i) => (
+                    <li key={i} className="flex items-center gap-3 text-sm font-medium text-slate-400">
+                      <ChevronRight size={16} className="text-blue-500" /> {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Content Section: Conclusiones */}
+        {activeTab === 'conclusiones' && (
+          <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <div className="grid md:grid-cols-2 gap-6 mb-8">
+              <div className="bg-white rounded-3xl p-8 shadow-sm border-l-8 border-l-blue-600">
+                <h3 className="text-xl font-black text-slate-800 mb-4">Conclusiones Clave</h3>
+                <ul className="space-y-4">
+                  <li className="flex gap-4">
+                    <span className="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xs shrink-0">01</span>
+                    <p className="text-slate-600 text-sm">Integración eficiente de información multi-tabla para una visión holística de los datos.</p>
+                  </li>
+                  <li className="flex gap-4">
+                    <span className="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xs shrink-0">02</span>
+                    <p className="text-slate-600 text-sm">Comprensión táctica de cuándo aplicar cada tipo de JOIN según el objetivo analítico.</p>
+                  </li>
+                  <li className="flex gap-4">
+                    <span className="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xs shrink-0">03</span>
+                    <p className="text-slate-600 text-sm">Optimización de la toma de decisiones basada en datos reales consolidados.</p>
+                  </li>
+                </ul>
+              </div>
+              
+              <div className="bg-emerald-50 rounded-3xl p-8 shadow-sm border-l-8 border-l-emerald-600">
+                <h3 className="text-xl font-black text-emerald-900 mb-4">Recomendaciones</h3>
+                <div className="space-y-3">
+                  {[
+                    'Definir un propósito de negocio claro antes de unir tablas.',
+                    'Validar relaciones (PK/FK) previamente.',
+                    'Documentar rigurosamente el código SQL generado.',
+                    'Usar LEFT/RIGHT JOIN proactivamente para auditoría de datos.'
+                  ].map((rec, idx) => (
+                    <div key={idx} className="bg-white p-3 rounded-xl text-emerald-800 text-xs font-bold border border-emerald-100 shadow-sm flex items-center gap-3">
+                      <div className="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
+                      {rec}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 text-center">
+              <h3 className="text-slate-400 font-bold uppercase tracking-[0.2em] text-[10px] mb-6">Recursos del Proyecto</h3>
+              <div className="flex flex-wrap justify-center gap-4">
+                <a href="#" className="bg-slate-900 text-white px-8 py-3 rounded-2xl font-bold flex items-center gap-3 hover:bg-slate-800 transition-colors">
+                  <BookOpen size={18} /> Scripts SQL
+                </a>
+                <a href="#" className="bg-blue-600 text-white px-8 py-3 rounded-2xl font-bold flex items-center gap-3 hover:bg-blue-500 transition-colors shadow-lg shadow-blue-200">
+                  <Layout size={18} /> Repositorio GitHub
+                </a>
+              </div>
+            </div>
+          </div>
+        )}
+      </main>
+
+      <footer className="max-w-5xl mx-auto mt-12 text-center text-slate-400 text-xs pb-12">
+        <p>© 2026 Universidad Andina del Cusco - Facultad de Ingeniería y Arquitectura</p>
+        <p className="mt-2 font-medium">Modelado de Base de Datos | Grupo: Las Fuerzas</p>
+      </footer>
+    </div>
+  );
+};
+
+export default App;
