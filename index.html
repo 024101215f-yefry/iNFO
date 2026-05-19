@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infografía Interactiva: Álgebra Relacional y LINQ</title>
+    <!-- Tailwind CSS para diseño moderno y fluido -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome para iconos limpios -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- KaTeX para renderizar expresiones matemáticas elegantes -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+        
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #0f172a; /* Slate 900 */
+        }
+        .code-font {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .uac-gradient {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #1d4ed8 100%);
+        }
+        .card-glow:hover {
+            box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.3);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="text-slate-100 min-h-screen selection:bg-blue-500 selection:text-white pb-12">
+
+    <!-- HEADER / BANNER -->
+    <header class="relative uac-gradient overflow-hidden py-10 px-6 sm:px-12 border-b border-blue-900/40">
+        <!-- Elementos geométricos decorativos -->
+        <div class="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl -mr-20 -mt-20"></div>
+        <div class="absolute bottom-0 left-0 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl -ml-20 -mb-20"></div>
+
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
+            <div class="flex items-center gap-5">
+                <!-- Escudo Virtual de Ingeniería de Sistemas / UAC -->
+                <div class="w-20 h-20 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/20 shadow-inner">
+                    <i class="fa-solid fa-gears text-4xl text-yellow-400 animate-spin-slow"></i>
+                </div>
+                <div>
+                    <span class="text-xs font-semibold tracking-wider text-blue-200 uppercase">Modelado de Base de Datos</span>
+                    <h1 class="text-2xl sm:text-4xl font-extrabold text-white mt-0.5 tracking-tight">Álgebra Relacional en la Práctica</h1>
+                    <p class="text-sm text-blue-100 mt-1 max-w-2xl">
+                        Infografía Interactiva sobre el Taller 3.1: Operaciones Unarias y Binarias aplicadas en <span class="font-semibold text-yellow-300">ADO.NET Entity Framework</span> y <span class="font-semibold text-cyan-300">LINQ</span>.
+                    </p>
+                </div>
+            </div>
+
+            <div class="bg-slate-900/60 backdrop-blur-md border border-slate-700/50 rounded-2xl p-4 text-xs space-y-2 w-full md:w-auto min-w-[280px]">
+                <div class="flex justify-between border-b border-slate-700/50 pb-1.5">
+                    <span class="text-slate-400">Institución:</span>
+                    <span class="font-medium text-slate-200 text-right">Universidad Andina del Cusco</span>
+                </div>
+                <div class="flex justify-between border-b border-slate-700/50 pb-1.5">
+                    <span class="text-slate-400">Grupo:</span>
+                    <span class="font-medium text-yellow-400 text-right">Las Fuerzas</span>
+                </div>
+                <div class="flex justify-between border-b border-slate-700/50 pb-1.5">
+                    <span class="text-slate-400">Docente:</span>
+                    <span class="font-medium text-slate-200 text-right">Espetia Huamanga, Hugo</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-slate-400">Año Académico:</span>
+                    <span class="font-medium text-slate-200 text-right">2026</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 space-y-12">
+
+        <!-- INTRODUCCIÓN Y ARQUITECTURA -->
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <!-- Introducción -->
+            <div class="lg:col-span-5 bg-slate-800/40 border border-slate-700/40 rounded-3xl p-6 sm:p-8 flex flex-col justify-between">
+                <div class="space-y-4">
+                    <div class="inline-flex items-center gap-2 bg-blue-500/10 text-blue-400 px-3.5 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider">
+                        <i class="fa-solid fa-circle-info"></i> Introducción del Proyecto
+                    </div>
+                    <h2 class="text-xl sm:text-2xl font-bold tracking-tight">El Puente Teórico-Práctico</h2>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        El álgebra relacional es el lenguaje formal matemático que gobierna el almacenamiento y recuperación en bases de datos relacionales. No obstante, en el desarrollo de software moderno, los programadores interactúan a través de lenguajes orientados a objetos.
+                    </p>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        Esta infografía demuestra cómo las operaciones matemáticas de <strong>Selección, Proyección, Renombramiento, Unión, Diferencia</strong> y <strong>Producto Cartesiano</strong> se mapean directamente a consultas declarativas de <strong>LINQ</strong> sobre un ORM empresarial como <strong>Entity Framework</strong>.
+                    </p>
+                </div>
+
+                <div class="mt-8 border-t border-slate-700/50 pt-5 grid grid-cols-2 gap-4">
+                    <div class="bg-slate-900/30 p-3 rounded-xl border border-slate-800">
+                        <div class="text-xs text-slate-400">Base de Datos</div>
+                        <div class="text-sm font-semibold text-white">SQL Server</div>
+                    </div>
+                    <div class="bg-slate-900/30 p-3 rounded-xl border border-slate-800">
+                        <div class="text-xs text-slate-400">Framework ORM</div>
+                        <div class="text-sm font-semibold text-white">Entity Framework</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Arquitectura Interactiva de Mapeo -->
+            <div class="lg:col-span-7 bg-slate-800/40 border border-slate-700/40 rounded-3xl p-6 sm:p-8 space-y-6">
+                <div class="inline-flex items-center gap-2 bg-cyan-500/10 text-cyan-400 px-3.5 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider">
+                    <i class="fa-solid fa-network-wired"></i> Arquitectura de Consultas
+                </div>
+                <h2 class="text-xl sm:text-2xl font-bold tracking-tight">Flujo de Ejecución Declarativa</h2>
+
+                <!-- Diagrama interactivo de flujo -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 relative mt-4">
+                    <!-- Paso 1 -->
+                    <div class="bg-slate-900/50 border border-slate-800 p-4 rounded-2xl flex flex-col justify-between hover:border-blue-500/50 transition-all group">
+                        <div>
+                            <span class="text-xs font-bold text-blue-500 bg-blue-500/10 w-6 h-6 rounded-full inline-flex items-center justify-center mb-3">1</span>
+                            <h3 class="font-bold text-sm text-slate-200 group-hover:text-blue-400 transition-colors">Abstracción LINQ</h3>
+                            <p class="text-xs text-slate-400 mt-1 leading-relaxed">El desarrollador escribe una expresión algebraico-declarativa elegante en C#.</p>
+                        </div>
+                        <div class="mt-4 bg-slate-950 p-2 rounded-lg border border-slate-800 text-[10px] code-font text-blue-400">
+                            db.Clientes.Where(...)
+                        </div>
+                    </div>
+
+                    <!-- Paso 2 -->
+                    <div class="bg-slate-900/50 border border-slate-800 p-4 rounded-2xl flex flex-col justify-between hover:border-purple-500/50 transition-all group">
+                        <div>
+                            <span class="text-xs font-bold text-purple-500 bg-purple-500/10 w-6 h-6 rounded-full inline-flex items-center justify-center mb-3">2</span>
+                            <h3 class="font-bold text-sm text-slate-200 group-hover:text-purple-400 transition-colors">Motor del ORM</h3>
+                            <p class="text-xs text-slate-400 mt-1 leading-relaxed">Entity Framework traduce el árbol de expresiones de LINQ a código SQL nativo compatible.</p>
+                        </div>
+                        <div class="mt-4 bg-slate-950 p-2 rounded-lg border border-slate-800 text-[10px] code-font text-purple-400">
+                            EF Core / DBContext
+                        </div>
+                    </div>
+
+                    <!-- Paso 3 -->
+                    <div class="bg-slate-900/50 border border-slate-800 p-4 rounded-2xl flex flex-col justify-between hover:border-cyan-500/50 transition-all group">
+                        <div>
+                            <span class="text-xs font-bold text-cyan-500 bg-cyan-500/10 w-6 h-6 rounded-full inline-flex items-center justify-center mb-3">3</span>
+                            <h3 class="font-bold text-sm text-slate-200 group-hover:text-cyan-400 transition-colors">Servidor SQL</h3>
+                            <p class="text-xs text-slate-400 mt-1 leading-relaxed">SQL Server ejecuta la consulta optimizada y retorna conjuntos de datos relacionales.</p>
+                        </div>
+                        <div class="mt-4 bg-slate-950 p-2 rounded-lg border border-slate-800 text-[10px] code-font text-cyan-400">
+                            SELECT * FROM Clientes...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CASO PRÁCTICO & DIAGRAMA ER -->
+        <section class="bg-slate-800/20 border border-slate-700/30 rounded-3xl p-6 sm:p-8 space-y-8">
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div class="space-y-1">
+                    <div class="inline-flex items-center gap-2 bg-yellow-500/10 text-yellow-400 px-3.5 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider">
+                        <i class="fa-solid fa-database"></i> Base de Datos "EmpresaDB"
+                    </div>
+                    <h2 class="text-2xl font-bold tracking-tight">Modelo Entidad-Relación y Caso de Estudio</h2>
+                    <p class="text-slate-400 text-sm max-w-3xl">
+                        Nuestra simulación modela una empresa de comercio de productos tecnológicos. Haz clic en las tablas del diagrama lógico para ver sus campos claves, propiedades y tipos de relaciones asociadas.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Interactive DB Schema / ERD Display -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                <!-- Tabla Proveedores -->
+                <div onclick="highlightTable('proveedores')" id="table-proveedores" class="cursor-pointer bg-slate-900/60 border-2 border-slate-800 hover:border-blue-500 p-4 rounded-2xl transition-all duration-300 transform hover:-translate-y-1">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-2 mb-3">
+                        <span class="font-bold text-sm text-slate-200 flex items-center gap-2">
+                            <i class="fa-solid fa-truck-field text-yellow-500"></i> Proveedores
+                        </span>
+                        <span class="text-[10px] bg-slate-800 px-2 py-0.5 rounded text-slate-400">Entidad</span>
+                    </div>
+                    <ul class="text-xs space-y-1.5 text-slate-400">
+                        <li class="flex justify-between font-semibold text-blue-400"><span class="flex items-center gap-1">🔑 IdProveedor</span> <span>int</span></li>
+                        <li class="flex justify-between"><span>NombreProveedor</span> <span>string</span></li>
+                        <li class="flex justify-between"><span>Ciudad</span> <span>string</span></li>
+                        <li class="flex justify-between"><span>Telefono</span> <span>string</span></li>
+                    </ul>
+                    <div class="mt-4 pt-2 border-t border-slate-800/50 text-[10px] text-slate-500">
+                        Relación: <span class="text-yellow-400 font-semibold">1 a Muchos</span> con Productos.
+                    </div>
+                </div>
+
+                <!-- Tabla Productos -->
+                <div onclick="highlightTable('productos')" id="table-productos" class="cursor-pointer bg-slate-900/60 border-2 border-slate-800 hover:border-blue-500 p-4 rounded-2xl transition-all duration-300 transform hover:-translate-y-1">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-2 mb-3">
+                        <span class="font-bold text-sm text-slate-200 flex items-center gap-2">
+                            <i class="fa-solid fa-laptop text-cyan-500"></i> Productos
+                        </span>
+                        <span class="text-[10px] bg-slate-800 px-2 py-0.5 rounded text-slate-400">Entidad</span>
+                    </div>
+                    <ul class="text-xs space-y-1.5 text-slate-400">
+                        <li class="flex justify-between font-semibold text-blue-400"><span class="flex items-center gap-1">🔑 IdProducto</span> <span>int</span></li>
+                        <li class="flex justify-between"><span>NombreProducto</span> <span>string</span></li>
+                        <li class="flex justify-between"><span>Precio</span> <span>decimal</span></li>
+                        <li class="flex justify-between"><span>Stock</span> <span>int</span></li>
+                        <li class="flex justify-between text-yellow-500"><span class="flex items-center gap-1">🔗 IdProveedor</span> <span>int</span></li>
+                    </ul>
+                    <div class="mt-4 pt-2 border-t border-slate-800/50 text-[10px] text-slate-500">
+                        Relación: <span class="text-cyan-400 font-semibold">Muchos a 1</span> con Pedidos.
+                    </div>
+                </div>
+
+                <!-- Tabla Clientes -->
+                <div onclick="highlightTable('clientes')" id="table-clientes" class="cursor-pointer bg-slate-900/60 border-2 border-slate-800 hover:border-blue-500 p-4 rounded-2xl transition-all duration-300 transform hover:-translate-y-1">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-2 mb-3">
+                        <span class="font-bold text-sm text-slate-200 flex items-center gap-2">
+                            <i class="fa-solid fa-users text-purple-500"></i> Clientes
+                        </span>
+                        <span class="text-[10px] bg-slate-800 px-2 py-0.5 rounded text-slate-400">Entidad</span>
+                    </div>
+                    <ul class="text-xs space-y-1.5 text-slate-400">
+                        <li class="flex justify-between font-semibold text-blue-400"><span class="flex items-center gap-1">🔑 IdCliente</span> <span>int</span></li>
+                        <li class="flex justify-between"><span>Nombre</span> <span>string</span></li>
+                        <li class="flex justify-between"><span>Edad</span> <span>int</span></li>
+                        <li class="flex justify-between"><span>Ciudad</span> <span>string</span></li>
+                    </ul>
+                    <div class="mt-4 pt-2 border-t border-slate-800/50 text-[10px] text-slate-500">
+                        Relación: <span class="text-purple-400 font-semibold">1 a Muchos</span> con Pedidos.
+                    </div>
+                </div>
+
+                <!-- Tabla Pedidos -->
+                <div onclick="highlightTable('pedidos')" id="table-pedidos" class="cursor-pointer bg-slate-900/60 border-2 border-slate-800 hover:border-blue-500 p-4 rounded-2xl transition-all duration-300 transform hover:-translate-y-1">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-2 mb-3">
+                        <span class="font-bold text-sm text-slate-200 flex items-center gap-2">
+                            <i class="fa-solid fa-cart-shopping text-emerald-500"></i> Pedidos
+                        </span>
+                        <span class="text-[10px] bg-slate-800 px-2 py-0.5 rounded text-slate-400">Entidad</span>
+                    </div>
+                    <ul class="text-xs space-y-1.5 text-slate-400">
+                        <li class="flex justify-between font-semibold text-blue-400"><span class="flex items-center gap-1">🔑 IdPedido</span> <span>int</span></li>
+                        <li class="flex justify-between text-yellow-500"><span class="flex items-center gap-1">🔗 IdCliente</span> <span>int</span></li>
+                        <li class="flex justify-between text-yellow-500"><span class="flex items-center gap-1">🔗 IdProducto</span> <span>int</span></li>
+                        <li class="flex justify-between"><span>Cantidad</span> <span>int</span></li>
+                        <li class="flex justify-between"><span>FechaPedido</span> <span>DateTime</span></li>
+                        <li class="flex justify-between"><span>EstadoPedido</span> <span>string</span></li>
+                    </ul>
+                    <div class="mt-4 pt-2 border-t border-slate-800/50 text-[10px] text-slate-500">
+                        Une <span class="text-slate-200">Clientes</span> y <span class="text-slate-200">Productos</span>.
+                    </div>
+                </div>
+
+                <!-- Tabla Empleados -->
+                <div onclick="highlightTable('empleados')" id="table-empleados" class="cursor-pointer bg-slate-900/60 border-2 border-slate-800 hover:border-blue-500 p-4 rounded-2xl transition-all duration-300 transform hover:-translate-y-1">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-2 mb-3">
+                        <span class="font-bold text-sm text-slate-200 flex items-center gap-2">
+                            <i class="fa-solid fa-user-shield text-indigo-500"></i> Empleados
+                        </span>
+                        <span class="text-[10px] bg-slate-800 px-2 py-0.5 rounded text-slate-400">Entidad</span>
+                    </div>
+                    <ul class="text-xs space-y-1.5 text-slate-400">
+                        <li class="flex justify-between font-semibold text-blue-400"><span class="flex items-center gap-1">🔑 IdEmpleado</span> <span>int</span></li>
+                        <li class="flex justify-between"><span>Nombre</span> <span>string</span></li>
+                        <li class="flex justify-between"><span>Area</span> <span>string</span></li>
+                        <li class="flex justify-between"><span>Estado</span> <span>string</span></li>
+                        <li class="flex justify-between"><span>Salario</span> <span>decimal</span></li>
+                    </ul>
+                    <div class="mt-4 pt-2 border-t border-slate-800/50 text-[10px] text-slate-500">
+                        Independiente para modelados organizacionales internos.
+                    </div>
+                </div>
+            </div>
+            <!-- Dynamic helper feedback -->
+            <div id="table-feedback" class="bg-slate-900/50 text-slate-300 text-xs p-3.5 rounded-xl border border-slate-800 flex items-center gap-2 transition-all">
+                <i class="fa-solid fa-circle-info text-blue-400"></i>
+                <span>Haz clic en cualquier tabla de arriba para resaltar sus características.</span>
+            </div>
+        </section>
+
+        <!-- PLAYGROUND INTERACTIVO DE ÁLGEBRA RELACIONAL -->
+        <section class="bg-slate-800/40 border border-slate-700/40 rounded-3xl p-6 sm:p-8 space-y-6">
+            <div class="space-y-1">
+                <div class="inline-flex items-center gap-2 bg-purple-500/10 text-purple-400 px-3.5 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider">
+                    <i class="fa-solid fa-flask"></i> Demostrador Práctico
+                </div>
+                <h2 class="text-2xl font-bold tracking-tight">Consola de Operaciones y Simulación</h2>
+                <p class="text-slate-400 text-sm">
+                    Selecciona una operación algebraica clásica de abajo para ver su equivalencia lógica, traducción de código y salida de datos reales.
+                </p>
+            </div>
+
+            <!-- Botones de Operación -->
+            <div class="flex flex-wrap gap-2.5">
+                <button onclick="switchOperation('seleccion')" id="btn-seleccion" class="op-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-2 bg-blue-600 text-white shadow-lg shadow-blue-900/40">
+                    <span class="text-lg">σ</span> Selección (Unaria)
+                </button>
+                <button onclick="switchOperation('proyeccion')" id="btn-proyeccion" class="op-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-2 bg-slate-800 text-slate-400 hover:bg-slate-700/60">
+                    <span class="text-lg">π</span> Proyección (Unaria)
+                </button>
+                <button onclick="switchOperation('renombramiento')" id="btn-renombramiento" class="op-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-2 bg-slate-800 text-slate-400 hover:bg-slate-700/60">
+                    <span class="text-lg">ρ</span> Renombramiento (Unaria)
+                </button>
+                <button onclick="switchOperation('union')" id="btn-union" class="op-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-2 bg-slate-800 text-slate-400 hover:bg-slate-700/60">
+                    <span class="text-lg">∪</span> Unión (Binaria)
+                </button>
+                <button onclick="switchOperation('diferencia')" id="btn-diferencia" class="op-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-2 bg-slate-800 text-slate-400 hover:bg-slate-700/60">
+                    <span class="text-lg">−</span> Diferencia (Binaria)
+                </button>
+                <button onclick="switchOperation('cartesiano')" id="btn-cartesiano" class="op-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-2 bg-slate-800 text-slate-400 hover:bg-slate-700/60">
+                    <span class="text-lg">×</span> Producto Cartesiano
+                </button>
+            </div>
+
+            <!-- Contenido dinámico por operación -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-4">
+                
+                <!-- Columna Izquierda: Teoría, Expresión y Ejercicios -->
+                <div class="lg:col-span-5 space-y-6">
+                    <!-- Caja de Teoría Dinámica -->
+                    <div class="bg-slate-900/60 border border-slate-800 p-5 rounded-2xl space-y-3">
+                        <h3 class="font-bold text-lg text-slate-200 flex items-center gap-2">
+                            <span id="op-title">Operación de Selección</span>
+                            <span class="text-xs bg-blue-500/10 text-blue-400 px-2 py-0.5 rounded font-mono" id="op-symbol">σ</span>
+                        </h3>
+                        <p class="text-slate-400 text-xs leading-relaxed" id="op-desc">
+                            Permite filtrar tuplas (filas) de una única relación que cumplan con una condición o predicado específico. Es equivalente al WHERE en lenguaje SQL y al método de extensión Where() de LINQ.
+                        </p>
+                    </div>
+
+                    <!-- Lista de Ejercicios Disponibles para la Operación -->
+                    <div class="space-y-2">
+                        <label class="text-xs font-semibold text-slate-400 uppercase tracking-wider block">Ejercicios del Informe Técnico:</label>
+                        <div id="exercise-list" class="space-y-1">
+                            <!-- Inyectado mediante JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Columna Derecha: Equivalentes y Consola -->
+                <div class="lg:col-span-7 space-y-4">
+                    <!-- Contenedor Matemático / Código -->
+                    <div class="bg-slate-950 border border-slate-850 rounded-2xl p-5 space-y-4">
+                        <!-- Expresión Formal KaTeX -->
+                        <div class="border-b border-slate-900 pb-3 flex justify-between items-center flex-wrap gap-2">
+                            <span class="text-xs font-bold text-slate-400 uppercase">Sintaxis Formal:</span>
+                            <div class="bg-slate-900/80 px-4 py-1.5 rounded-lg border border-slate-800">
+                                <span id="formal-katex" class="text-yellow-400 font-bold text-sm"></span>
+                            </div>
+                        </div>
+
+                        <!-- Panel de Código LINQ -->
+                        <div class="space-y-1">
+                            <span class="text-[11px] font-bold text-cyan-400 uppercase tracking-widest block">Código LINQ (C# Declarativo):</span>
+                            <div class="relative">
+                                <pre class="bg-slate-900/80 border border-slate-850 p-4 rounded-xl text-xs code-font text-cyan-300 overflow-x-auto" id="linq-code"></pre>
+                            </div>
+                        </div>
+
+                        <!-- Panel de SQL Equivalente -->
+                        <div class="space-y-1">
+                            <span class="text-[11px] font-bold text-purple-400 uppercase tracking-widest block font-sans">Consulta SQL Equivalente:</span>
+                            <pre class="bg-slate-900/80 border border-slate-850 p-4 rounded-xl text-xs code-font text-purple-300 overflow-x-auto" id="sql-code"></pre>
+                        </div>
+                    </div>
+
+                    <!-- Resultado de la Base de Datos (Grid / Tabla) -->
+                    <div class="bg-slate-900/40 border border-slate-800 rounded-2xl p-5 space-y-2.5">
+                        <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Resultado de Ejecución en Form1
+                        </span>
+                        <div class="overflow-x-auto max-h-72 overflow-y-auto border border-slate-800/80 rounded-xl" id="table-container">
+                            <!-- Tabla de datos inyectada por JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- IMPLEMENTACIÓN TÉCNICA Y CODIGO DE LA INTERFAZ -->
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <!-- Contexto del Form1.cs -->
+            <div class="lg:col-span-5 bg-slate-800/40 border border-slate-700/40 rounded-3xl p-6 sm:p-8 space-y-4 flex flex-col justify-between">
+                <div class="space-y-4">
+                    <div class="inline-flex items-center gap-2 bg-indigo-500/10 text-indigo-400 px-3.5 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider">
+                        <i class="fa-solid fa-laptop-code"></i> Windows Forms UI
+                    </div>
+                    <h2 class="text-2xl font-bold tracking-tight">El Entorno Gráfico</h2>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        Para el desarrollo del laboratorio, el grupo de investigación <strong>"Las fuerzas"</strong> estructuró una aplicación cliente en Windows Forms (<code>Form1.cs</code>) con un panel de 18 botones de acción secuenciales.
+                    </p>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        Cada botón ejecuta un fragmento de código de consulta mediante el contexto de datos generado por el archivo de modelado de Entity Framework (<code>Model1.edmx</code>) y carga los resultados filtrados dinámicamente en controles de datos <code>DataGridView</code>.
+                    </p>
+                </div>
+                <div class="mt-4 pt-4 border-t border-slate-700/40 flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-slate-900/60 flex items-center justify-center border border-slate-800">
+                        <i class="fa-solid fa-code-merge text-indigo-400"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-400">Patrón de Consulta</div>
+                        <div class="text-sm font-semibold text-white">Declarativo Tipado</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Caja de Código Completo de ejemplo -->
+            <div class="lg:col-span-7 bg-slate-800/40 border border-slate-700/40 rounded-3xl p-6 sm:p-8 space-y-4">
+                <div class="flex items-center justify-between">
+                    <span class="text-xs font-semibold tracking-wider text-slate-400 uppercase">Estructura Interna del C# Context</span>
+                    <span class="text-[10px] bg-slate-900 px-2 py-0.5 rounded text-indigo-300 font-mono">Form1.cs</span>
+                </div>
+                <h2 class="text-xl font-bold tracking-tight">Mapeo Conceptual en C#</h2>
+                <div class="bg-slate-950 p-4 rounded-2xl border border-slate-850">
+                    <pre class="text-xs code-font text-slate-300 overflow-x-auto space-y-1">
+<span class="text-blue-400">// Estructura típica de un controlador de botones en el proyecto</span>
+<span class="text-slate-500">private void</span> <span class="text-yellow-400">button1_Click</span>(<span class="text-slate-500">object</span> sender, <span class="text-indigo-400">EventArgs</span> e)
+{
+    <span class="text-slate-500">using</span> (<span class="text-indigo-400">EmpresaDBEntities</span> db = <span class="text-slate-500">new</span> <span class="text-indigo-400">EmpresaDBEntities</span>())
+    {
+        <span class="text-slate-500">var</span> consulta = <span class="text-slate-500">from</span> c <span class="text-slate-500">in</span> db.Cliente
+                       <span class="text-slate-500">where</span> c.Edad &gt; <span class="text-emerald-400">30</span>
+                       <span class="text-slate-500">select</span> c;
+
+        dataGridView1.DataSource = consulta.ToList();
+    }
+}</pre>
+                </div>
+                <p class="text-slate-400 text-xs">
+                    Este patrón garantiza la gestión óptima de la conexión mediante el bloque <code>using</code>, cerrando los sockets de conexión inmediatamente después de mapear el resultado del Álgebra Relacional.
+                </p>
+            </div>
+        </section>
+
+        <!-- RESULTADOS, CONCLUSIONES Y RECOMENDACIONES -->
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Resultados -->
+            <div class="bg-slate-800/20 border border-slate-700/30 p-6 sm:p-8 rounded-3xl space-y-4">
+                <div class="w-12 h-12 bg-emerald-500/10 rounded-2xl flex items-center justify-center border border-emerald-500/20 text-emerald-400 text-xl">
+                    <i class="fa-solid fa-circle-check"></i>
+                </div>
+                <h3 class="text-lg font-bold">Resultados Obtenidos</h3>
+                <p class="text-slate-400 text-xs leading-relaxed">
+                    Se implementó exitosamente el mapeo de todas las operaciones teóricas sobre el motor SQL Server. Las consultas permitieron filtrar, proyectar, renombrar y combinar las tuplas dinámicamente con cero errores de compilación y excelente rendimiento.
+                </p>
+            </div>
+
+            <!-- Conclusiones -->
+            <div class="bg-slate-800/20 border border-slate-700/30 p-6 sm:p-8 rounded-3xl space-y-4">
+                <div class="w-12 h-12 bg-blue-500/10 rounded-2xl flex items-center justify-center border border-blue-500/20 text-blue-400 text-xl">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <h3 class="text-lg font-bold">Conclusiones Clave</h3>
+                <p class="text-slate-400 text-xs leading-relaxed">
+                    El álgebra relacional provee la base matemática inmutable de los datos. Entity Framework actúa como un compilador de lenguajes declarativos modernos, demostrando que LINQ unifica e integra la sintaxis lógica directamente en C# sin recurrir a sentencias de texto SQL crudo propensas a inyecciones.
+                </p>
+            </div>
+
+            <!-- Recomendaciones / Sugerencias -->
+            <div class="bg-slate-800/20 border border-slate-700/30 p-6 sm:p-8 rounded-3xl space-y-4">
+                <div class="w-12 h-12 bg-yellow-500/10 rounded-2xl flex items-center justify-center border border-yellow-500/20 text-yellow-400 text-xl">
+                    <i class="fa-solid fa-lightbulb"></i>
+                </div>
+                <h3 class="text-lg font-bold">Sugerencias y Futuro</h3>
+                <p class="text-slate-400 text-xs leading-relaxed">
+                    Se sugiere profundizar en relaciones complejas Muchos-a-Muchos utilizando tablas intermedias explícitas, así como la optimización mediante la implementación de procedimientos almacenados del sistema en combinación con LINQ Compiled Queries para proyectos de gran volumen.
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER Y DESARROLLADORES -->
+    <footer class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 border-t border-slate-800 pt-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white font-bold text-sm">
+                LF
+            </div>
+            <div>
+                <div class="text-xs font-bold text-slate-300">Desarrollado por Grupo: "Las Fuerzas"</div>
+                <div class="text-[10px] text-slate-500">S. Araoz • R. León • Y. Quispe | Cusco-Perú 2026</div>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <a href="https://github.com/sebasta12352/GUIA3-1" target="_blank" class="bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition-all">
+                <i class="fa-brands fa-github text-sm"></i> Repositorio GitHub
+            </a>
+            <span class="text-xs text-slate-600">Modelado de Base de Datos - UAC</span>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE SCRIPT PARA LA SIMULACIÓN -->
+    <script>
+        // Datos simulados de la base de datos empresarial
+        const DB = {
+            clientes: [
+                { IdCliente: 1, Nombre: "Juan Perez", Edad: 35, Ciudad: "Lima" },
+                { IdCliente: 2, Nombre: "Maria Lopez", Edad: 28, Ciudad: "Arequipa" },
+                { IdCliente: 3, Nombre: "Carlos Ramos", Edad: 40, Ciudad: "Cusco" },
+                { IdCliente: 4, Nombre: "Ana Torres", Edad: 22, Ciudad: "Lima" },
+                { IdCliente: 5, Nombre: "Luis Mendoza", Edad: 31, Ciudad: "Arequipa" }
+            ],
+            productos: [
+                { IdProducto: 1, NombreProducto: "Laptop Lenovo", Precio: 2500.00, Stock: 10, IdProveedor: 1 },
+                { IdProducto: 2, NombreProducto: "Mouse Logitech", Precio: 80.00, Stock: 30, IdProveedor: 1 },
+                { IdProducto: 3, NombreProducto: "Teclado Mecánico", Precio: 350.00, Stock: 20, IdProveedor: 2 },
+                { IdProducto: 4, NombreProducto: "Monitor Samsung", Precio: 700.00, Stock: 15, IdProveedor: 2 },
+                { IdProducto: 5, NombreProducto: "Impresora Epson", Precio: 450.00, Stock: 8, IdProveedor: 3 }
+            ],
+            empleados: [
+                { IdEmpleado: 1, Nombre: "Pedro Castillo", Area: "Ventas", Estado: "Activo", Salario: 3200.00 },
+                { IdEmpleado: 2, Nombre: "Lucia Fernandez", Area: "Marketing", Estado: "Activo", Salario: 2800.00 },
+                { IdEmpleado: 3, Nombre: "Jose Ramirez", Area: "Ventas", Estado: "Inactivo", Salario: 2400.00 },
+                { IdEmpleado: 4, Nombre: "Andrea Flores", Area: "Recursos Humanos", Estado: "Activo", Salario: 2600.00 },
+                { IdEmpleado: 5, Nombre: "Miguel Torres", Area: "Ventas", Estado: "Activo", Salario: 2100.00 }
+            ],
+            proveedores: [
+                { IdProveedor: 1, NombreProveedor: "Tech Import", Ciudad: "Lima" },
+                { IdProveedor: 2, NombreProveedor: "Global Systems", Ciudad: "Arequipa" },
+                { IdProveedor: 3, NombreProveedor: "Peru Hardware", Ciudad: "Cusco" }
+            ],
+            pedidos: [
+                { IdPedido: 2, IdCliente: 2, IdProducto: 4, Cantidad: 1, FechaPedido: "11/05/2026", EstadoPedido: "Pendiente" }
+            ]
+        };
+
+        // Estructura de Operaciones con sus respectivos ejercicios
+        const operationsData = {
+            seleccion: {
+                title: "Operación de Selección",
+                symbol: "\\sigma",
+                desc: "Filtra tuplas (filas) de una relación específica de acuerdo con condiciones de comparación relacionales lógicas. Es equivalente al comando 'WHERE' en SQL estándar y al operador .Where() de LINQ en C#.",
+                color: "blue",
+                exercises: [
+                    {
+                        title: "Filtro por Comparación de Edad (Clientes > 30 años)",
+                        formal: "\\sigma_{\\text{Edad} > 30}(\\text{Clientes})",
+                        linq: "var query = from c in db.Clientes\n            where c.Edad > 30\n            select c;",
+                        sql: "SELECT * FROM Clientes\nWHERE Edad > 30;",
+                        execute: () => DB.clientes.filter(c => c.Edad > 30)
+                    },
+                    {
+                        title: "Filtro de Rango (Productos con precio entre 350 y 700)",
+                        formal: "\\sigma_{350 \\le \\text{Precio} \\le 700}(\\text{Productos})",
+                        linq: "var query = db.Productos\n              .Where(p => p.Precio >= 350 && p.Precio <= 700);",
+                        sql: "SELECT * FROM Productos\nWHERE Precio >= 350 AND Precio <= 700;",
+                        execute: () => DB.productos.filter(p => p.Precio >= 350 && p.Precio <= 700)
+                    },
+                    {
+                        title: "Filtro de Pertenencia (Clientes de Lima o Arequipa)",
+                        formal: "\\sigma_{\\text{Ciudad} \\in \\{\\text{'Lima'}, \\text{'Arequipa'}\\}}(\\text{Clientes})",
+                        linq: "var query = db.Clientes\n              .Where(c => c.Ciudad == \"Lima\" || c.Ciudad == \"Arequipa\");",
+                        sql: "SELECT * FROM Clientes\nWHERE Ciudad IN ('Lima', 'Arequipa');",
+                        execute: () => DB.clientes.filter(c => c.Ciudad === "Lima" || c.Ciudad === "Arequipa")
+                    }
+                ]
+            },
+            proyeccion: {
+                title: "Operación de Proyección",
+                symbol: "\\pi",
+                desc: "Permite seleccionar atributos (columnas) específicos de una relación dada, eliminando los duplicados del conjunto si existieran. Es equivalente a la cláusula SELECT de SQL y al operador .Select() de LINQ.",
+                color: "cyan",
+                exercises: [
+                    {
+                        title: "Proyección Básica de Clientes",
+                        formal: "\\pi_{\\text{Nombre}, \\text{Ciudad}}(\\text{Clientes})",
+                        linq: "var query = db.Clientes\n              .Select(c => new { c.Nombre, c.Ciudad });",
+                        sql: "SELECT Nombre, Ciudad FROM Clientes;",
+                        execute: () => DB.clientes.map(c => ({ Nombre: c.Nombre, Ciudad: c.Ciudad }))
+                    },
+                    {
+                        title: "Proyección de Sueldos de Colaboradores",
+                        formal: "\\pi_{\\text{Nombre}, \\text{Salario}}(\\text{Empleados})",
+                        linq: "var query = db.Empleado\n              .Select(e => new { e.Nombre, e.Salario });",
+                        sql: "SELECT Nombre, Salario FROM Empleado;",
+                        execute: () => DB.empleados.map(e => ({ Nombre: e.Nombre, Salario: `$${e.Salario.toFixed(2)}` }))
+                    }
+                ]
+            },
+            renombramiento: {
+                title: "Operación de Renombramiento",
+                symbol: "\\rho",
+                desc: "Cambia el nombre de los atributos en las tuplas para evitar colisiones de nombres o mejorar el semántico del negocio. En LINQ y SQL se implementa fácilmente a través de alias en la proyección.",
+                color: "purple",
+                exercises: [
+                    {
+                        title: "Renombramiento de Identidad de Clientes",
+                        formal: "\\rho_{\\text{Trabajador} \\leftarrow \\text{Nombre}, \\text{Ubicacion} \\leftarrow \\text{Ciudad}}(\\text{Clientes})",
+                        linq: "var query = db.Clientes\n              .Select(c => new {\n                  Cliente = c.Nombre,\n                  Ubicacion = c.Ciudad\n              });",
+                        sql: "SELECT Nombre AS Cliente, Ciudad AS Ubicacion FROM Clientes;",
+                        execute: () => DB.clientes.map(c => ({ Cliente: c.Nombre, Ubicacion: c.Ciudad }))
+                    },
+                    {
+                        title: "Renombramiento de Costos de Productos",
+                        formal: "\\rho_{\\text{Producto} \\leftarrow \\text{NombreProducto}, \\text{Costo} \\leftarrow \\text{Precio}}(\\text{Productos})",
+                        linq: "var query = db.Productos\n              .Select(p => new {\n                  Producto = p.NombreProducto,\n                  Costo = p.Precio\n              });",
+                        sql: "SELECT NombreProducto AS Producto, Precio AS Costo FROM Productos;",
+                        execute: () => DB.productos.map(p => ({ Producto: p.NombreProducto, Costo: p.Precio }))
+                    }
+                ]
+            },
+            union: {
+                title: "Operación de Unión",
+                symbol: "\\cup",
+                desc: "Combina los registros de dos consultas en un solo conjunto, eliminando registros duplicados automáticamente. Requiere compatibilidad de esquema (mismo tipo de datos en orden). En LINQ se ejecuta mediante .Union().",
+                color: "emerald",
+                exercises: [
+                    {
+                        title: "Unión de Ciudades de Proveedores y Clientes",
+                        formal: "\\pi_{\\text{Ciudad}}(\\text{Clientes}) \\cup \\pi_{\\text{Ciudad}}(\\text{Proveedores})",
+                        linq: "var query = (db.Clientes.Select(c => c.Ciudad))\n              .Union(db.Proveedores.Select(p => p.Ciudad));",
+                        sql: "SELECT Ciudad FROM Clientes\nUNION\nSELECT Ciudad FROM Proveedores;",
+                        execute: () => {
+                            const cCities = DB.clientes.map(c => c.Ciudad);
+                            const pCities = DB.proveedores.map(p => p.Ciudad);
+                            const unique = Array.from(new Set([...cCities, ...pCities]));
+                            return unique.map(city => ({ Ciudad: city }));
+                        }
+                    }
+                ]
+            },
+            diferencia: {
+                title: "Operación de Diferencia",
+                symbol: "-",
+                desc: "Encuentra las filas presentes en la primera relación que no tienen contraparte en la segunda. Se utiliza .Except() en LINQ y EXCEPT / NOT EXISTS en el SQL relacional.",
+                color: "indigo",
+                exercises: [
+                    {
+                        title: "Clientes sin pedidos despachados (Mock)",
+                        formal: "\\pi_{\\text{IdCliente}}(\\text{Clientes}) - \\pi_{\\text{IdCliente}}(\\text{Pedidos})",
+                        linq: "var query = db.Clientes.Select(c => c.IdCliente)\n              .Except(db.Pedidos.Select(p => p.IdCliente));",
+                        sql: "SELECT IdCliente FROM Clientes\nEXCEPT\nSELECT IdCliente FROM Pedidos;",
+                        execute: () => {
+                            const pedIds = DB.pedidos.map(p => p.IdCliente);
+                            return DB.clientes
+                                .filter(c => !pedIds.includes(c.IdCliente))
+                                .map(c => ({ IdCliente: c.IdCliente, Nombre: c.Nombre }));
+                        }
+                    }
+                ]
+            },
+            cartesiano: {
+                title: "Producto Cartesiano",
+                symbol: "\\times",
+                desc: "Combina cada tupla de la primera relación con absolutamente cada tupla de la segunda relación. Da como resultado una matriz NxM de elementos. Se logra haciendo multi-from clauses en LINQ.",
+                color: "rose",
+                exercises: [
+                    {
+                        title: "Cruzar Empleados con Proveedores",
+                        formal: "\\text{Empleados} \\times \\text{Proveedores}",
+                        linq: "var query = from e in db.Empleado\n            from p in db.Proveedor\n            select new {\n                Empleado = e.Nombre,\n                Proveedor = p.NombreProveedor\n            };",
+                        sql: "SELECT e.Nombre AS Empleado, p.NombreProveedor AS Proveedor \nFROM Empleado e CROSS JOIN Proveedores p;",
+                        execute: () => {
+                            let results = [];
+                            DB.empleados.forEach(e => {
+                                DB.proveedores.forEach(p => {
+                                    results.push({ Empleado: e.Nombre, Proveedor: p.NombreProveedor });
+                                });
+                            });
+                            return results;
+                        }
+                    }
+                ]
+            }
+        };
+
+        let currentOperation = 'seleccion';
+
+        // Inicializar la aplicación interactiva
+        window.addEventListener('DOMContentLoaded', () => {
+            switchOperation('seleccion');
+        });
+
+        // Alternar entre pestañas de operaciones algebraicas
+        function switchOperation(opKey) {
+            currentOperation = opKey;
+            const op = operationsData[opKey];
+
+            // UI feedback para los botones
+            document.querySelectorAll('.op-btn').forEach(btn => {
+                btn.className = "op-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-2 bg-slate-800 text-slate-400 hover:bg-slate-700/60";
+            });
+
+            const activeBtn = document.getElementById(`btn-${opKey}`);
+            if (activeBtn) {
+                activeBtn.className = `op-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-2 bg-blue-600 text-white shadow-lg shadow-blue-900/40`;
+            }
+
+            // Cambiar textos estáticos
+            document.getElementById('op-title').innerText = op.title;
+            document.getElementById('op-symbol').innerText = op.symbol;
+            document.getElementById('op-desc').innerText = op.desc;
+
+            // Cargar lista de ejercicios
+            const listContainer = document.getElementById('exercise-list');
+            listContainer.innerHTML = '';
+
+            op.exercises.forEach((ex, index) => {
+                const btn = document.createElement('button');
+                btn.className = `w-full text-left p-3.5 rounded-xl border text-xs font-semibold transition-all duration-200 ${
+                    index === 0 
+                    ? 'bg-slate-800 border-blue-500/50 text-white shadow-sm' 
+                    : 'bg-slate-900/40 border-slate-800 text-slate-400 hover:text-slate-200 hover:bg-slate-800'
+                }`;
+                btn.innerText = ex.title;
+                btn.onclick = (e) => selectExercise(ex, e.currentTarget);
+                listContainer.appendChild(btn);
+            });
+
+            // Seleccionar por defecto el primer ejercicio de la operación
+            if(op.exercises.length > 0) {
+                loadExerciseData(op.exercises[0]);
+            }
+        }
+
+        // Seleccionar ejercicio dinámico
+        function selectExercise(exercise, element) {
+            // Deseleccionar botones anteriores de ejercicios
+            element.parentElement.querySelectorAll('button').forEach(b => {
+                b.className = "w-full text-left p-3.5 rounded-xl border text-xs font-semibold bg-slate-900/40 border-slate-800 text-slate-400 hover:text-slate-200 hover:bg-slate-800 transition-all duration-200";
+            });
+            // Marcar botón activo
+            element.className = "w-full text-left p-3.5 rounded-xl border text-xs font-semibold bg-slate-800 border-blue-500/50 text-white shadow-sm transition-all duration-200";
+            
+            loadExerciseData(exercise);
+        }
+
+        // Cargar los datos matemáticos y de simulación
+        function loadExerciseData(ex) {
+            // Renderizar la fórmula del álgebra formal con KaTeX
+            const formalSpan = document.getElementById('formal-katex');
+            try {
+                katex.render(ex.formal, formalSpan, { throwOnError: false });
+            } catch (err) {
+                formalSpan.innerText = ex.formal;
+            }
+
+            // Mostrar el código equivalente
+            document.getElementById('linq-code').textContent = ex.linq;
+            document.getElementById('sql-code').textContent = ex.sql;
+
+            // Ejecutar la consulta simulada
+            const data = ex.execute();
+            renderTableResult(data);
+        }
+
+        // Renderizar dinámicamente el DataGridView del Form1 simulado
+        function renderTableResult(data) {
+            const container = document.getElementById('table-container');
+            container.innerHTML = '';
+
+            if (data.length === 0) {
+                container.innerHTML = '<div class="p-6 text-center text-slate-500 text-xs">Sin registros que coincidan con la operación relacional.</div>';
+                return;
+            }
+
+            // Detectar cabeceras dinámicamente
+            const headers = Object.keys(data[0]);
+
+            const table = document.createElement('table');
+            table.className = "w-full text-[11px] text-left border-collapse text-slate-300";
+
+            // Headers
+            const thead = document.createElement('thead');
+            thead.className = "bg-slate-950/80 sticky top-0 text-slate-400 border-b border-slate-800 font-mono";
+            const hRow = document.createElement('tr');
+            headers.forEach(header => {
+                const th = document.createElement('th');
+                th.className = "px-4 py-3 font-semibold uppercase tracking-wider";
+                th.innerText = header;
+                hRow.appendChild(th);
+            });
+            thead.appendChild(hRow);
+            table.appendChild(thead);
+
+            // Body
+            const tbody = document.createElement('tbody');
+            tbody.className = "divide-y divide-slate-850/50";
+            data.forEach((row, i) => {
+                const rRow = document.createElement('tr');
+                rRow.className = i % 2 === 0 ? "bg-slate-900/20" : "bg-slate-900/40";
+                headers.forEach(header => {
+                    const td = document.createElement('td');
+                    td.className = "px-4 py-2.5 font-medium";
+                    td.innerText = row[header];
+                    rRow.appendChild(td);
+                });
+                tbody.appendChild(rRow);
+            });
+            table.appendChild(tbody);
+            container.appendChild(table);
+        }
+
+        // Resaltar tabla en el mapa relacional interactivo
+        function highlightTable(tableName) {
+            // Quitar clase activa de todas
+            document.querySelectorAll('[id^="table-"]').forEach(t => {
+                t.style.borderColor = 'rgba(30, 41, 59, 0.8)'; // Slate 800 default
+            });
+
+            // Resaltar la seleccionada
+            const activeTable = document.getElementById(`table-${tableName}`);
+            activeTable.style.borderColor = '#3b82f6'; // Blue-500
+
+            // Actualizar panel de feedback
+            const feedbackText = {
+                proveedores: "👉 <strong>PROVEEDORES:</strong> Suministran la tecnología. Relacionado con <em>Productos</em> mediante la clave foránea <code>IdProveedor</code>.",
+                productos: "👉 <strong>PRODUCTOS:</strong> Catálogo tecnológico. Posee el costo, stock disponible y depende del <em>Proveedor</em>. Es parte de la transacción en <em>Pedidos</em>.",
+                clientes: "👉 <strong>CLIENTES:</strong> Compradores registrados en la plataforma. Poseen segmentación por <code>Edad</code> y <code>Ciudad</code>.",
+                pedidos: "👉 <strong>PEDIDOS:</strong> La transacción principal. Es una entidad asociativa fuerte que vincula dinámicamente a un <em>Cliente</em> con un <em>Producto</em> vendido.",
+                empleados: "👉 <strong>EMPLEADOS:</strong> Datos del personal corporativo para auditoría organizacional (Salarios, Estado del colaborador, Áreas de soporte, etc.)."
+            };
+
+            const feedback = document.getElementById('table-feedback');
+            feedback.innerHTML = `<i class="fa-solid fa-lightbulb text-yellow-400 animate-pulse"></i> <span>${feedbackText[tableName]}</span>`;
+        }
+    </script>
+</body>
+</html>
